@@ -1,182 +1,134 @@
-# <span style="color: #4CAF50;">Search Algorithms: Linear, Binary, Exponential, and Jump</span>
+# Search Algorithms Implementation
 
-This document provides an in-depth explanation of four common search algorithms: **Linear Search**, **Binary Search**, **Exponential Search**, and **Jump Search**. Each algorithm will be explained with pseudocode, followed by a breakdown of its operation and time complexity analysis.
+This project implements and compares four different search algorithms in C: Linear Search, Binary Search, Exponential Search, and Jump Search. The implementation includes performance metrics such as execution time and number of operations performed.
 
-## Table of Contents
+## Features
 
-- [Linear Search](#linear-search)
-- [Binary Search](#binary-search)
-- [Exponential Search](#exponential-search)
-- [Jump Search](#jump-search)
-- [Summary of Time Complexities](#summary-of-time-complexities)
+- Implementation of four search algorithms:
+  - Linear Search
+  - Binary Search
+  - Exponential Search
+  - Jump Search
+- Performance metrics for each algorithm:
+  - Execution time measurement
+  - Operation count (number of comparisons)
+- Dynamic memory allocation for arrays
+- Support for large datasets
+- Performance comparison capabilities
 
-## <span style="color: #4CAF50;">Linear Search</span>
+## Requirements
 
-### Explanation
+- C compiler (GCC recommended)
+- Standard C libraries:
+  - stdio.h
+  - stdlib.h
+  - time.h
+  - math.h
 
-Linear Search is the simplest search algorithm. It works by checking each element in the array sequentially until the desired element is found or the end of the array is reached. It does not require any specific order of the elements.
+## Installation
 
-### Pseudocode
-
-```c
-for each element in the array:
-    if the element matches the target:
-        return the index
-return -1  // If element is not found
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/search-algorithms.git
 ```
 
-### Example
-
-Consider an array of numbers: `[10, 20, 30, 40, 50]`, and we are searching for the number `40`.
-
-1. Start at the first element `10`. It does not match `40`, so move to the next.
-2. Move to `20`. It does not match `40`, so move to the next.
-3. Move to `30`. It does not match `40`, so move to the next.
-4. Move to `40`. It matches the target, so return the index `3`.
-
-### <span style="color: #FF5733;">Time Complexity</span>
-
-- **Best Case**: O(1) (if the element is found at the first position)
-- **Average Case**: O(n) (if the element is somewhere in the middle)
-- **Worst Case**: O(n) (if the element is the last element or not in the array)
-
-Linear search is best suited for small or unsorted datasets, but it becomes inefficient with larger datasets.
-
----
-
-## <span style="color: #4CAF50;">Binary Search</span>
-
-### Explanation
-
-Binary Search is a much more efficient algorithm but requires that the array be **sorted**. The basic idea is to repeatedly divide the array in half to narrow down the search interval. The algorithm compares the target with the middle element of the array, and depending on the result, either narrows the search to the left half or the right half.
-
-### Pseudocode
-
-```c
-low = 0
-high = length of array - 1
-
-while low <= high:
-    mid = (low + high) / 2
-    if array[mid] == target:
-        return mid
-    else if array[mid] < target:
-        low = mid + 1
-    else:
-        high = mid - 1
-return -1  // If target is not found
+2. Compile the program:
+```bash
+gcc search_algorithms.c -o search_algorithms -lm
 ```
 
-### Example
+The `-lm` flag is required for the math library used in the Jump Search implementation.
 
-Consider an array of numbers: `[10, 20, 30, 40, 50]`, and we are searching for the number `40`.
+## Usage
 
-1. The array is already sorted. Start with `low = 0`, `high = 4`, and `mid = (0 + 4) / 2 = 2`. The element at index `2` is `30`, which is less than `40`, so move to the right half.
-2. Now `low = 3` and `high = 4`, so `mid = (3 + 4) / 2 = 3`. The element at index `3` is `40`, which matches the target, so return `3`.
-
-### <span style="color: #FF5733;">Time Complexity</span>
-
-- **Best Case**: O(1) (if the target is at the middle)
-- **Average Case**: O(log n) (since the array is halved with each comparison)
-- **Worst Case**: O(log n) (since the array is halved with each comparison)
-
-Binary search is highly efficient for large datasets, but it requires sorted data and has limitations when dealing with unsorted or dynamic data.
-
----
-
-## <span style="color: #4CAF50;">Exponential Search</span>
-
-### Explanation
-
-Exponential Search is an extension of binary search that works well when the size of the array is large and the data is unbounded or not known in advance. It first finds a range in which the element may be present by doubling the search bounds, and then applies binary search within that range.
-
-### Pseudocode
-
-```c
-if array[0] == target:
-    return 0
-i = 1
-while i < length of array and array[i] < target:
-    i = i * 2
-return binarySearch(array, i/2, min(i, n-1), target)
+1. Run the compiled program:
+```bash
+./search_algorithms
 ```
 
-### Example
+2. Follow the prompts:
+   - Enter the size of the array
+   - Enter the number to search for
 
-Consider an array of numbers: `[10, 20, 30, 40, 50]`, and we are searching for the number `40`.
+3. The program will display the results for each search algorithm, including:
+   - Whether the number was found
+   - Position(s) where the number was found
+   - Execution time
+   - Number of operations performed
 
-1. Initially, start with `i = 1`. Since `array[1] = 20` and `20 < 40`, we double the index: `i = 2`.
-2. Continue doubling: `i = 4`. Now, `array[4] = 50` which is greater than `40`. We found our range: between `array[2]` and `array[4]`.
-3. Now apply Binary Search within this range to find `40`.
+## Implementation Details
 
-### <span style="color: #FF5733;">Time Complexity</span>
+### Linear Search
+- Searches for all occurrences of the target value
+- Returns an array of positions where the value was found
+- Counts the number of comparisons performed
+- Time Complexity: O(n)
 
-- **Best Case**: O(1) (if the element is at the first position)
-- **Average Case**: O(log n)
-- **Worst Case**: O(log n)
+### Binary Search
+- Requires a sorted array
+- Returns the first occurrence of the target value
+- Counts the number of comparisons performed
+- Time Complexity: O(log n)
 
-Exponential Search is very effective in situations where the array size is large and we are unsure about the bounds of the data.
+### Exponential Search
+- Combines exponential growth with binary search
+- Works well with unbounded arrays
+- Counts the number of comparisons performed
+- Time Complexity: O(log n)
 
----
+### Jump Search
+- Uses square root step size
+- Combines jumping with linear search
+- Counts the number of comparisons performed
+- Time Complexity: O(√n)
 
-## <span style="color: #4CAF50;">Jump Search</span>
+## Functions
 
-### Explanation
-
-Jump Search works by jumping ahead a fixed number of steps (usually the square root of the array length) and then performing a linear search within the block where the target might be.
-
-### Pseudocode
-
+### Array Management
 ```c
-step = sqrt(length of array)
-prev = 0
-
-while array[min(step, n)-1] < target:
-    prev = step
-    step += step
-    if prev >= n:
-        return -1
-
-for i = prev to min(step, n):
-    if array[i] == target:
-        return i
-return -1
+long *fillArray(long size)
 ```
+- Creates and fills an array with sequential numbers
+- Returns a dynamically allocated array
 
-### Example
+### Search Functions
+```c
+long binarySearch(long size, long *array, long target, long *operations)
+long *linearSearch(long size, long *array, long target, long *foundCount, long *operations)
+long exponentialSearch(long *array, long size, long target, long *operations)
+long jumpSearch(long *array, long size, long target, long *operations)
+```
+- Each function returns the position(s) where the target was found
+- Operations parameter tracks the number of comparisons
+- Returns -1 or NULL if the target is not found
 
-Consider an array of numbers: `[10, 20, 30, 40, 50]`, and we are searching for the number `40`.
+## Performance Analysis
 
-1. The square root of the length of the array is `sqrt(5) = 2`. Start by checking index `2` (i.e., `array[2] = 30`).
-2. Since `30 < 40`, jump ahead by 2 positions to index `4` (i.e., `array[4] = 50`).
-3. Now that we've passed the target, perform a linear search from index `2` to `4`. At index `3`, `array[3] = 40`, so return `3`.
+The program provides detailed performance metrics for each algorithm:
+- Execution time in seconds
+- Number of comparison operations performed
+- Position(s) where the target was found
 
-### <span style="color: #FF5733;">Time Complexity</span>
+This allows for practical comparison of algorithm efficiency based on:
+- Dataset size
+- Target value location
+- Algorithm characteristics
 
-- **Best Case**: O(√n)
-- **Average Case**: O(√n)
-- **Worst Case**: O(√n)
+## Memory Management
 
-Jump Search is useful for sorted arrays when you want a balance between linear and binary search techniques.
+The program implements proper memory management:
+- Dynamic allocation for arrays
+- Memory deallocation after use
+- Reallocation for resizing when needed
 
----
+## Contributing
 
-## <span style="color: #4CAF50;">Summary of Time Complexities</span>
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-| Algorithm                                                   | Best Case | Average Case | Worst Case |
-| ----------------------------------------------------------- | --------- | ------------ | ---------- |
-| <span style="color: #4CAF50;">**Linear Search**</span>      | O(1)      | O(n)         | O(n)       |
-| <span style="color: #4CAF50;">**Binary Search**</span>      | O(1)      | O(log n)     | O(log n)   |
-| <span style="color: #4CAF50;">**Exponential Search**</span> | O(1)      | O(log n)     | O(log n)   |
-| <span style="color: #4CAF50;">**Jump Search**</span>        | O(√n)     | O(√n)        | O(√n)      |
+## License
 
----
-
-### <span style="color: #4CAF50;">Conclusion</span>
-
-- **Linear Search** is simple but inefficient for large datasets.
-- **Binary Search** is fast but requires the data to be sorted.
-- **Exponential Search** is effective for large and unbounded datasets.
-- **Jump Search** offers a middle ground, combining linear and binary search techniques.
-
-Each search algorithm has its strengths and weaknesses, and selecting the right one depends on the dataset and the problem at hand.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
