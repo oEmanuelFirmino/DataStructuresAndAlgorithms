@@ -47,7 +47,7 @@ For each algorithm and data structure, time and space complexity are analyzed us
 ## Directory Structure
 
 /TypesOfSearch ├── SearchPerformance.c ├── /output
-/data_structures ├── arrays.c ├── linked_list.c ├── stack.c ├── queue.c ├── tree.c
+<br>/data_structures ├── arrays.c ├── linked_list.c ├── stack.c ├── queue.c ├── tree.c
 
 yaml
 Copiar
